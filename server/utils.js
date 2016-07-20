@@ -19,10 +19,9 @@ var Utils = {
      })
    })
  },
-
+ 
  createSessionId: function() {
    return uuid.v4();
  }
 }
 module.exports = Utils;
-
