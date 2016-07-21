@@ -1,25 +1,31 @@
-var FACEBOOK_ID = '932055926922953';
-var FACEBOOK_CALLBACK_URL = 'http://localhost:4040/facebookLogin/Callback'
-var FACEBOOK_SECRET = 'c283a4b04e8635a09c8ac2d0ed071e30'
+// var FACEBOOK_ID = '932055926922953';
+// var FACEBOOK_CALLBACK_URL = 'http://localhost:4040/facebookLogin/Callback'
+// var FACEBOOK_SECRET = 'c283a4b04e8635a09c8ac2d0ed071e30'
+var INSTAGRAM_ID = '11aeef855e224c23ab73786f79c3f1d1';
+var INSTAGRAM_CALLBACK_URL = 'http://localhost:4040/instagramLogin/Callback';
+var INSTAGRAM_SECRET = '11412943ed9a42cf994b54ec4ba28b3e';
 var passport = require("passport");
 var LocalStrategy = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+var InstagramStrategy = require('passport-instagram').Strategy;
+// var FacebookStrategy = require('passport-facebook').Strategy;
 var path       = require('path');
 var db         = require(path.join(__dirname, './db.js'));
 var Utils      = require(path.join(__dirname, './utils.js'));
+
 
 module.exports = function(passport){
 
   passport.serializeUser(function(user, callback){
     console.log("HEY THERE")
     console.log("SUSERS", user , callback)
-    callback(null, user)
+    callback(null, user.userID || user.instagramID || user)
   });
 
   passport.deserializeUser(function(id,callback){
     console.log("Decerael")
-    User.findById(id, function(err,user){
-        callback(err,user)
+    findUserByID(id).then(value => {
+      if (value) done(null, value)
+      else done('no session', value)
     })
   })
 
@@ -31,7 +37,8 @@ module.exports = function(passport){
           console.log("user", user)
           if(user.length > 0){
               if(user[0].username){
-                  return callback(null,false);
+                //, flash('signUpMessage', 'Username taken')
+                  return callback(null, false);
               }
           }
           else {
@@ -68,15 +75,18 @@ module.exports = function(passport){
                 return callback(null, user[0]);
               } else {
                 console.log('user exists, but wrong password')
+                //, flash('badPass', 'Incorrect password')
                 return callback(null, false);
               }
             })
             .catch(val => {
               console.log('Password incorrect', val);
+              // , flash('badPass', 'Incorrect password')
               return callback(null, false);
             })
           } else {
             console.log('User not found');
+            //, flash('noUser', 'Username not found')
             return callback(null, false);
           }
         })
@@ -84,17 +94,63 @@ module.exports = function(passport){
     }
   ))
 
+  passport.use(new InstagramStrategy({
+    clientID: INSTAGRAM_ID,
+    clientSecret: INSTAGRAM_SECRET,
+    callbackURL: INSTAGRAM_CALLBACK_URL
+  },
+  function(token, refreshToken, profile, done) {
+    process.nextTick(function () {
+      db.collection('users').find({instagramID: profile.id}).then(user => {
+        if (user.length > 0) {
+          return done(null, user[0])
+        }
+        else {
+          addInstagramUser(profile, token).then(userVal => {
+            console.log('DONE', done);
+            console.log('USERVAL', userVal)
+            return done(null, userVal);
+          })
+        }
+      })
+    });
+  }));
+
+}
+
+function addInstagramUser(user, token) {
+	console.log('USER',user, 'TOKEN', token)
+	// return db.collection('users').find({username: user.emails[0].value}).then(exists => {
+  //   console.log('inside existing IG user')
+  //   if(exists.length > 0) {
+  //     return db.collection('users').find({username: user.emails[0].value}).update({
+  //       instagramID: user.id,
+  //       instagramToken: token,
+  //       instagramEmail: user.emails[0].value
+  //     })
+  //   }
+    // else {
+      console.log('inside inserting IG user')
+      return db.collection('IGusers').insert({
+        instagramID: user.id,
+        instagramToken: token
+        // instagramEmail: user.emails[0].value
+      })
+    // }
+  // })
+  // .catch(err => {console.log('ERRRRORRRRR', err)})
 }
 
 
-
-        // else{
-        //             return hashPassword(password).then(function(hashword){
-        //                 return knex('users').returning('userID').where({facebookEmail:username}).update({username:username,password:hashword}).then(function(value){
-        //                     console.log('users',value)
-        //                     return callback(null,{userID:value[0]})
-        //                 })
-        //             })
-
-
-        //         }
+var findUserByID = function(ID) {
+ 	console.log("FINDUSERID", ID)
+	return db.collection('IGusers').find({
+		instagramID : ID
+	}).then(value => {
+		console.log('valueIDID',value)
+		if (value.length > 0) {
+			return value[0];
+		}
+		return false;
+	})
+}

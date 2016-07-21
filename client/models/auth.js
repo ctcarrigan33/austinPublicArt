@@ -104,9 +104,8 @@ export function fetchUsername() {
       'cookieHeader': document.cookie
     }
   }
-return fetch(`/username`, obj)
-  .then(function(resp) {
-    return resp.json()
-  })
+  return fetch(`/username`, obj)
+    .then(function(resp) {
+      return resp.json()
+    })
 }
-

@@ -3,7 +3,9 @@ var path       = require('path');
 var browserify = require("browserify-middleware");
 var bodyParser = require('body-parser');
 var passport   = require("passport");
+//var flash      = require('connect-flash');
 var LocalStrategy   = require('passport-local').Strategy;
+var InstagramStrategy = require('passport-instagram').Strategy;
 
 var Utils      = require(path.join(__dirname, './utils.js'));
 var db         = require(path.join(__dirname, './db.js'));
@@ -22,6 +24,7 @@ browserify(path.join(__dirname, '../client/main.js'), {
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 // client asking for art data
 app.get('/art', function(req,res) {
   //retrieve all art from db
@@ -30,7 +33,9 @@ app.get('/art', function(req,res) {
     res.send(art)
   })
 })
-app.post('/signUp', passport.authenticate('local-signup'),function(req, res) {
+
+// , {failureFlash: true }
+app.post('/signUp', passport.authenticate('local-signup'), function(req, res) {
  console.log("IN MAIN NOW")
  var username = req.body.username;
  var password = req.body.password;
@@ -57,7 +62,9 @@ app.post('/signUp', passport.authenticate('local-signup'),function(req, res) {
  })
 // })
 // Logs in current user as long as username is in users collection and provided a valid password
-app.post('/login', passport.authenticate('local-login'), function(req, res) {
+
+//, {failureFlash: true }
+app.post('/login', passport.authenticate('local-login'),  function(req, res) {
  var username = req.body.username;
  var password = req.body.password;
  var userID;
@@ -104,6 +111,7 @@ app.get('/favorites', function(req, res) {
     // Return all favorited art back to client
     .then((returnedFavorites) => res.send(returnedFavorites))
 })
+
 app.get('/user', function(req, res) {
   var sessionId;
   if(req.headers.cookieheader) {
@@ -117,6 +125,7 @@ app.get('/user', function(req, res) {
   // Grab the user id from the sessions collection
   .then((returnedSession) => res.send(returnedSession[0].id))
 })
+
 app.get('/username', function(req, res) {
   var sessionId;
   if(req.headers.cookieheader) {
@@ -223,6 +232,13 @@ app.get('/likes/:id', function(req, res){
     })
   }
 })
+
+app.get('/instagramLogin', passport.authenticate('instagram'));
+
+app.get('/instagramLogin/Callback', passport.authenticate('instagram', {successRedirect: '/', failureRedirect: '/login'}), function(req,res) {
+  res.redirect('/gallery')
+})
+
 // Run server on port 4040
 var port = process.env.PORT || 4040;
 app.listen(port)

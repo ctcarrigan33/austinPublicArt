@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router' 
+import {Link} from 'react-router'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 import ReactSpinner from 'react-spinjs';
 
@@ -15,7 +15,7 @@ export default class NavBar extends React.Component {
       loggedIn: document.cookie,
       username: null
     }
-  } 
+  }
   componentWillMount() {
     if (document.cookie) {
       this.setState({loggedin: true})
@@ -56,7 +56,7 @@ export default class NavBar extends React.Component {
       })
   }
 
-  //Render the navbar 
+  //Render the navbar
   render() {
     return(
       <div className="w3-top">
@@ -74,7 +74,8 @@ export default class NavBar extends React.Component {
             <div className="w3-dropdown-content w3-white w3-card-4">
               {!this.state.loggedIn ? <div><a href="javascript:void(0)" onClick={this.openLogin.bind(this)}>Login</a>
               <a href="javascript:void(0)" onClick={this.openSignup.bind(this)}>Signup</a></div> :
-              <a href="javascript:void(0)" onClick={this.logout.bind(this)}>Logout</a>} 
+              <a href="javascript:void(0)" onClick={this.logout.bind(this)}>Logout</a>}
+              <a href='/instagramLogin'>Instagram</a>
             </div>
           </li>
           <li className="w3-hide-small w3-right"><a href="javascript:void(0)" className="w3-padding-large w3-hover-red"><i className="fa fa-search"></i></a></li>
@@ -87,7 +88,7 @@ export default class NavBar extends React.Component {
           <LoginModal onClose={this.closeLogin.bind(this)} fetchUser={this.fetchUser.bind(this)}/>
         : null}
       </div>
-    ) 
+    )
   }
 }
 
@@ -120,7 +121,7 @@ class LoginModal extends React.Component {
         :
         <ModalDialog onClose={this.props.onClose} className="example-dialog">
           <form name="loginForm" onSubmit={(e) => {
-            e.preventDefault(); 
+            e.preventDefault();
             auth.login({username: this.state.username, password: this.state.password})
              .then((x) => {
               if(x === 'Success') {
@@ -130,8 +131,8 @@ class LoginModal extends React.Component {
               } else {
                 this.setState({showError: x.statusText})
               }
-          }) 
-            this.load.call(this); 
+          })
+            this.load.call(this);
           }}>
             <h1>Login</h1>
             <p>Username:</p>
@@ -163,7 +164,7 @@ class SignUpModal extends React.Component {
     this.setState({isLoading: true});
     setTimeout(() => {
       this.setState({isLoading: false});
-    }, 1500);
+    }, 1500); 
   }
 
   render() {
@@ -173,7 +174,7 @@ class SignUpModal extends React.Component {
         :
         <ModalDialog onClose={this.props.onClose} className="example-dialog">
           <form name="signUpForm" onSubmit={(e) => {
-            e.preventDefault(); 
+            e.preventDefault();
             auth.signUp({username: this.state.username, password: this.state.password})
             .then((x) => {
               if(x === 'Success') {
@@ -184,7 +185,7 @@ class SignUpModal extends React.Component {
                 this.setState({showError: x.statusText})
               }
           })
-            this.load.call(this); 
+            this.load.call(this);
           }}>
             <h1>SignUp</h1>
             <p>Username:</p>
