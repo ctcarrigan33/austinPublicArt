@@ -3,17 +3,17 @@ import NavBar from './NavBar'
 import * as art from '../models/art'
 
 export default class ArtistPage extends React.Component {
-	constructor(props) {
-		super(props)
+  constructor(props) {
+    super(props)
 
-		this.state = {
-			art: []
-		}
-	}
+    this.state = {
+      art: []
+    }
+  }
 
-	componentWillMount() {
+  componentWillMount() {
     this.fetchArt(this.props.params.artistName)
-  }	
+  } 
   fetchArt(artist) {
     art.getArt()
     .then((artwork) => {
@@ -45,7 +45,7 @@ export default class ArtistPage extends React.Component {
             <div key={art._id} className="soloWork">
               <h3 className="soloArtTitle w3-xxlarge w3-text-black">{art['Art Title']}</h3>
               <img src={this.parseImageUrl(art.Images)[0]} />
-              <div className="soloArtInfo w3-large w3-text-black">
+              <div className="soloArtInfo w3-xlarge w3-text-black">
                 <p>{art['Art Location Name']}</p>
               </div>
             </div>

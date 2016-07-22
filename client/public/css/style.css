@@ -5,11 +5,16 @@
 }
 .slideContainer {
   margin: 0 auto;
-  padding: 40px;
+  text-align: center;
+  /*padding: 40px;*/
   width: 600px;
-  height: 1000px
-  color: #333;
+/*  height: 1000px*/
+/*  color: #333;*/
 /*  background: black;*/
+}
+
+.tester {
+  text-align: center;
 }
 
 .loadingDiv {  
@@ -19,6 +24,10 @@
   border: 10px solid black;
   padding: 25px;
   margin: auto;*/
+}
+
+.eachMap {  
+  font-family: "Amatica SC"; 
 }
 
 
@@ -91,7 +100,7 @@
 
 
 body {
-		background: #ffffff;
+    background: #ffffff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     position: relative;
@@ -140,7 +149,7 @@ h5 {
 }
 
 p {
-  font-size: 16px;
+/*  font-size: 16px;*/
   letter-spacing: 0.9px;
   line-height: 32px;
 }
@@ -151,8 +160,8 @@ p {
 ------------------------------------- */
 
 .parallax-section {
-  	background-attachment: fixed !important;
-  	background-size: cover !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
 }
 
 /* home section styles

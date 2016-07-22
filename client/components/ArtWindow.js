@@ -174,20 +174,13 @@ class Info extends React.Component {
     };
     if(images.length === 1) settings.arrows = false
     return (
-
-      <ModalContainer onClose={this.props.onClose}>
+<ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="info">
 
 
-            <div className='tester'><h2>{this.props.currentArt['Art Title']}</h2>
-
-            <p>By: {this.props.currentArt['Artist Full Name']}</p>
-            <p>Location: {this.props.currentArt['Art Location Name']}</p>
-
-            <p> Likes: {this.props.currentArt.likeCount.length}</p>
-
-            <p> Not Art: {this.props.currentArt.trashCount.length}</p>
-            <p> Hipster Scale: {this.props.currentArt.userScore.length}</p>
+            <div className='tester'><h1>{this.props.currentArt['Art Title']}</h1>
+            <p className="w3-xlarge w3-text-black">By: {this.props.currentArt['Artist Full Name']}</p>
+            <p className="w3-xlarge w3-text-black"> Likes: {this.props.currentArt.likeCount.length} Not Art: {this.props.currentArt.trashCount.length} Hipster Scale: {this.props.currentArt.userScore.length}</p>
             </div>
 
 
@@ -195,10 +188,8 @@ class Info extends React.Component {
               <Slider {...settings}>
                 {images.map((x) => <div key={images.indexOf(x)}><img className="slideshowPicture" src={x} /></div>)}
               </Slider>
-            </div>
-            <AMap location = {this.props.currentArt['Location'].split('(')[1].split(')')[0].split(',')}/>
           {/* Check if logged in (document.cookie?), if true display Like and Favorite button */}
-            {document.cookie ?
+                        {document.cookie ?
               <div className="userFeatures">
 
                 {(this.props.currentArt.trashCount.includes(this.state.userId)) ? '' :
@@ -235,7 +226,8 @@ class Info extends React.Component {
                     {this.props.currentArt.trashCount.includes(this.state.userId) ? "Still Trash" : "Trash it!"}
                   </button>
                 }
-                <div>Peace be the Journey:</div>
+                
+                 <div><div className="w3-xlarge w3-text-black w3-padding-medium">Peace be the Journey:</div></div>
 
                 <button className={this.state.numRed > 0 ?'btn btn-danger':'btn'} 
                 onClick={this.buttonClick.bind(this)} value={1} type='button'>🚲</button>
@@ -252,10 +244,15 @@ class Info extends React.Component {
                 <button className={this.state.numRed > 4 ?'btn btn-danger':'btn'} 
                 onClick={this.buttonClick.bind(this)} value={5} type='button'>🚲</button>
 
+                 <div><div className="w3-small w3-text-black w3-padding-medium">(the hipster scale))</div></div>
 
+                <p><br/></p>
 
               </div>
               : ''}
+                <p className="w3-xxlarge w3-text-black">Location: {this.props.currentArt['Art Location Name']}</p>
+            </div>
+            <AMap location = {this.props.currentArt['Location'].split('(')[1].split(')')[0].split(',')}/>
 
         </ModalDialog>
       </ModalContainer>

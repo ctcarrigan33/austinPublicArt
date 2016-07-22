@@ -92,8 +92,8 @@ export default class NavBar extends React.Component {
               {!this.state.loggedIn ? <div><a href="javascript:void(0)" onClick={this.openLogin.bind(this)} className="w3-xlarge w3-text-black w3-padding-medium" >Login</a>
               <a href="javascript:void(0)" className="w3-xlarge w3-text-black w3-padding-medium" onClick={this.openSignup.bind(this)}>Signup</a></div> :
               <a href="javascript:void(0)" className="w3-xlarge w3-text-black w3-padding-medium" onClick={this.logout.bind(this)}>Logout</a>}
-              <a href = '/facebookLogin' className="w3-medium w3-text-black w3-padding-large" >Facebook</a> 
-              <a href = '/instagramLogin' className="w3-medium w3-text-black w3-padding-large"> Instagram</a>
+              <a href = '/facebookLogin' className="w3-xlarge w3-text-black w3-padding-medium">Facebook</a> 
+              <a href = '/instagramLogin' className="w3-xlarge w3-text-black w3-padding-medium">Instagram</a>
 
             </div>
           </li>
