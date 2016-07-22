@@ -65,7 +65,7 @@ onMapClicked(props){
     console.log("MONKEY",this.props.googley)
     console.log("Yea",this.props.google)
     return (
-      <div style={style}>
+      <div style={style} >
       {this.state.location.lat ?<Map google={this.props.google || this.props.googley} zoom={16} onClick={this.onMapClicked.bind(this)} initialCenter = {
     this.state.location
   }>
@@ -76,13 +76,12 @@ onMapClicked(props){
   <InfoWindow 
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}>
-            {this.state.selectedPlace.title ? <div>
-            	<h4 className="w3-xlarge w3-text-black w3-padding-medium">Title: {this.state.selectedPlace.title}</h4>
-              	<h5 className="w3-xlarge w3-text-black w3-padding-medium">Location: {this.state.selectedPlace.name}</h5>
-              	<h5 className="w3-xlarge w3-text-black w3-padding-medium">{this.state.selectedPlace.location}</h5>
-              	<h5 className="w3-xlarge w3-text-black w3-padding-medium">Artist: {this.state.selectedPlace.artistName}</h5>
-              	<img src={this.state.selectedPlace.artImage}/></div>
-              :<div><h4 className="w3-xlarge w3-text-black w3-padding-medium">{this.state.selectedPlace.name}</h4></div>}
+          {this.state.selectedPlace.title ? <div className="eachMap">
+              <p className="w3-xlarge w3-text-black"> {this.state.selectedPlace.title}</p>
+                <p className="w3-large w3-text-black">By {this.state.selectedPlace.artistName}</p>
+                <p className="w3-large w3-text-black">{this.state.selectedPlace.location}</p>
+                <img src={this.state.selectedPlace.artImage}/></div>
+              :<div className="eachMap"><h4 className="w3-xlarge w3-text-black w3-padding-medium">{this.state.selectedPlace.name}</h4></div>}
             
         </InfoWindow>
         <InfoWindow
