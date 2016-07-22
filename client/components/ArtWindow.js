@@ -9,7 +9,6 @@ import * as auth from '../models/auth'
 import * as art from '../models/art'
 
 
-const KEYS_TO_FILTERS = ['Artist Full Name', 'Art Title']
 const KEYS_TO_FILTERS = ['Artist Full Name', 'Art Title', 'Art Location Zip', 'Art Location Name']
 
 export default class ArtGallery extends React.Component {
@@ -176,9 +175,9 @@ class Info extends React.Component {
             <div className='tester'><h2>{this.props.currentArt['Art Title']}</h2>
             <p>By: {this.props.currentArt['Artist Full Name']}</p>
             <p>Location: {this.props.currentArt['Art Location Name']}</p>
-            <p> Likes: {this.props.currentArt.likeCount.length}</p>
-            <p> Not Art: {this.props.currentArt.trashCount.length}</p>
-            <p> Hipster Scale: {this.props.currentArt.userScore.length}</p>
+            <div> Likes: {this.props.currentArt.likeCount.length}</div>
+            <div> Not Art: {this.props.currentArt.trashCount.length}</div>
+            <div> Hipster Scale: {this.props.currentArt.userScore.length}</div>
             </div>
 
             <div className="slideContainer" >
