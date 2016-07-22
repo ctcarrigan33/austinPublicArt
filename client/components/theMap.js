@@ -16,17 +16,21 @@ class TheMap extends React.Component {
 			selectedPlace:{},
 			location:{},
 		}
-		navigator.geolocation.getCurrentPosition(suc.bind(this),fail);
-		function suc(position){
- var latitude  = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    this.setState({location:{lat:latitude,lng:longitude}})
-		}
-		function fail(){
-			console.log("booo!")
-		}
+		
 
 	}
+  componentWillMount(){
+    navigator.geolocation.getCurrentPosition(suc.bind(this),fail);
+    function suc(position){
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    this.setState({location:{lat:latitude,lng:longitude}})
+    }
+    function fail(){
+      console.log("booo!")
+    }
+  console.log("GOOGLE",this.props.artists)
+  }
 
 
 
@@ -54,23 +58,20 @@ onMapClicked(props){
       width: '100vw',
       height: '95vh'
     }
-    console.log("active",this.state.activeMarker)
     var positions = this.props.artists;
-    console.log(this.props.artists[0])
-    console.log('SO',this.state.location)
-    console.log("thiss",this.props.google)
     if(this.props.google){
       this.props.fetchGoogle(this.props.google)
     }
     console.log("MONKEY",this.props.googley)
+    console.log("Yea",this.props.google)
     return (
       <div style={style}>
-      {this.state.location.lat?<Map google={this.props.google || this.props.googley} zoom={16} onClick={this.onMapClicked.bind(this)} initialCenter = {
+      {this.state.location.lat ?<Map google={this.props.google || this.props.googley} zoom={16} onClick={this.onMapClicked.bind(this)} initialCenter = {
     this.state.location
   }>
   <Marker name ={'Current Location'} className = {'homeMarker'} position = {this.state.location} onClick={this.onMarkerClick.bind(this)}/>
   {positions.map((yup,index)=>{
-  	return(<Marker name = {this.props.artName[index]} onClick={this.onMarkerClick.bind(this)} location = {this.props.artLocation[index].split(';')[0]} title = {this.props.artTitle[index]} artistName = {this.props.artistName[index]} artWeb = {this.props.artWeb[index]} artImage = {this.props.artImage[index].split(';')[0]} position = {yup}/>)
+  	return(<Marker name = {this.props.artName[index]} onClick={this.onMarkerClick.bind(this)} location = {this.props.artLocation[index].split(';')[0]} title = {this.props.artTitle[index]} artistName = {this.props.artistName[index]} artWeb = {this.props.artWeb[index]} artImage = {this.props.artImage[index].split(';')[0]} position = {positions[index]}/>)
   })}
   <InfoWindow 
           marker={this.state.activeMarker}

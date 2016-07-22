@@ -53,19 +53,28 @@ componentDidMount() {
     		var latLon = {lat:lat,lng:lon}
     		return latLon
     		})
-				this.setState({ArtName})
-				this.setState({ArtLocation})
-				this.setState({ArtTitle})
-				this.setState({ArtistName})
-				this.setState({ArtImage})
-				this.setState({ArtWeb},function(){
-				// 	console.log("here",this.state.artName)
-				// console.log("ok",this.state.ArtTitle)
-				// console.log("here",this.state.artWeb)
-				// console.log("ok",this.state.artistName)
+				this.setState({ArtName},function(){
+					this.setState({ArtLocation},function(){
+							this.setState({ArtTitle},function(){
+									this.setState({ArtistName},function(){
+											this.setState({ArtImage},function(){
+													this.setState({ArtWeb},function(){
+														this.setState({artistLat:latLong})
 				})
 
-				this.setState({artistLat:latLong})
+				})
+
+
+				})
+			
+				})
+			
+				})
+			
+
+				})
+				
+				
 
 			})
 

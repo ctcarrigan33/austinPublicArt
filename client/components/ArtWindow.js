@@ -51,7 +51,7 @@ export default class ArtGallery extends React.Component {
   updateUserScore(userScore) {
     this.setState({currentArt: Object.assign(this.state.currentArt, {userScore: userScore.userScore})})
     console.log("where")
-
+}
   addToSearchTerm(terms) {
     console.log('DO I HAVE ACCESS TO THIS', terms)
     this.searchUpdated(terms)
@@ -65,7 +65,7 @@ export default class ArtGallery extends React.Component {
   render() {
 
 
-    const filteredArt = this.props.gallery.filter(createFilter(this.state.searchTerm[0], KEYS_TO_FILTERS))
+    const filteredArt = this.props.gallery.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     {console.log('DA FUCK IS THIS', this.props)}
 
     {console.log('DAFUQ IS THIS', this.state.searchTerm)}
