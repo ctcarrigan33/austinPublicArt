@@ -3,7 +3,7 @@
 // var FACEBOOK_SECRET = 'c283a4b04e8635a09c8ac2d0ed071e30'
 var INSTAGRAM_ID = '11aeef855e224c23ab73786f79c3f1d1';
 var INSTAGRAM_CALLBACK_URL = 'http://localhost:4040/instagramLogin/Callback';
-var INSTAGRAM_SECRET = '11412943ed9a42cf994b54ec4ba28b3e';
+var INSTAGRAM_SECRET = '';	// *** enter secret 
 var passport = require("passport");
 var LocalStrategy = require('passport-local').Strategy;
 var InstagramStrategy = require('passport-instagram').Strategy;
